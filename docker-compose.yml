@@ -1,0 +1,21 @@
+version: '2'
+
+services:
+    web:
+        image: docker-flask
+        container_name: mon-webflask_00
+        build:
+            context: /home/stagiaire/PycharmProjects/web_server_flask
+        ports:
+            - "5000:5000"
+        #network_mode: "host"
+        command: ["-h=0.0.0.0"]
+    jmeter:
+        image: comp-flask
+        container_name: jmeter_web_flask_00
+        build: /home/stagiaire/DevOps/docker-jmeter/docker-jmeter
+        volumes:
+            - ./results:/results
+        command: ["-H", "web", "-P", "5000"]
+        links:
+            - web
